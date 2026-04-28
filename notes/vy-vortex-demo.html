@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lo que no medimos antes de la primera demo — Byron Armijos</title>
+  <meta name="description" content="Ocho meses de trabajo, una pantalla correcta, y el problema era otro.">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ─── DESIGN TOKENS ─────────────────────── */
+    :root {
+      --bg: #FFFFFF;
+      --bg-alt: #F5F5F5;
+      --bg-surface: #FAFAFA;
+      --text: #0A0A0A;
+      --text-2: #595959;
+      --text-3: #767676;
+      --border: #E2E2E2;
+      --border-strong: #0A0A0A;
+
+      --f-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+      --f-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --f-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+
+      --t-xs: 0.64rem;
+      --t-sm: 0.8rem;
+      --t-base: 1rem;
+      --t-md: 1.25rem;
+      --t-lg: 1.563rem;
+      --t-xl: 1.953rem;
+      --t-3xl: 3.052rem;
+
+      --s1: 0.25rem;
+      --s3: 0.75rem;
+      --s4: 1rem;
+      --s6: 1.5rem;
+      --s8: 2rem;
+      --s12: 3rem;
+      --s16: 4rem;
+
+      --r: 4px;
+      --max-w: 800px;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0A0A0A;
+      --bg-alt: #111111;
+      --text: #F0F0F0;
+      --text-2: #A0A0A0;
+      --text-3: #767676;
+      --border: #252525;
+      --border-strong: #F0F0F0;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--f-body);
+      font-size: var(--t-base);
+      line-height: 1.65;
+      min-height: 100vh;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .wrap {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--s8);
+    }
+
+    @media (max-width: 640px) {
+      .wrap {
+        padding: 0 var(--s6);
+      }
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: var(--f-display);
+      line-height: 1.1;
+    }
+
+    a {
+      color: var(--text);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    a:hover {
+      color: var(--text-2);
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-logo {
+      font-family: var(--f-mono);
+      font-size: var(--t-sm);
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .btn-theme {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text);
+      cursor: pointer;
+      padding: var(--s1) var(--s3);
+      border-radius: var(--r);
+      font-family: var(--f-mono);
+      font-size: var(--t-xs);
+    }
+
+    .article-header {
+      padding: var(--s16) 0 var(--s8);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: var(--s12);
+    }
+
+    .article-meta {
+      font-family: var(--f-mono);
+      font-size: var(--t-xs);
+      color: var(--text-3);
+      margin-bottom: var(--s6);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .article-title {
+      font-size: clamp(2rem, 5vw, var(--t-3xl));
+      font-weight: 300;
+      font-style: italic;
+      margin-bottom: var(--s8);
+      line-height: 1.1;
+    }
+
+    .content {
+      font-size: var(--t-md);
+      color: var(--text-2);
+    }
+
+    .content p {
+      margin-bottom: var(--s6);
+    }
+
+    .content h2 {
+      font-size: var(--t-xl);
+      color: var(--text);
+      margin: var(--s12) 0 var(--s6);
+      font-weight: 600;
+    }
+
+    .content blockquote {
+      border-left: 2px solid var(--border-strong);
+      padding-left: var(--s6);
+      font-style: italic;
+      color: var(--text);
+      margin: var(--s8) 0;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: var(--s12);
+      margin-bottom: var(--s16);
+      font-family: var(--f-mono);
+      font-size: var(--t-sm);
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="nav">
+    <div class="wrap">
+      <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">← Byron Armijos</a>
+        <button class="btn-theme" id="btn-theme">
+          <span id="theme-lbl">oscuro</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <header class="article-header">
+      <div class="article-meta">Notas de campo · 5 min lectura</div>
+      <h1 class="article-title">La diferencia entre una pantalla correcta y una útil</h1>
+    </header>
+
+    <article class="content">
+      <p>Nuestra primera versión de VY Vortex nos enseñó una gran lección. La aplicación no tenía bugs y era muy rápida,
+        pero durante la prueba con los usuarios descubrimos que la interfaz, aunque mostraba los datos correctos, no se
+        adaptaba a su forma real de trabajar.</p>
+
+      <h2>El contexto de la aviación</h2>
+      <p>En el proyecto Vortex para Vueling, el objetivo era facilitar el trabajo de los operadores de disrupciones de
+        vuelo, que habitualmente tenían que consultar múltiples hojas de cálculo y herramientas desconectadas.
+        Construimos la aplicación usando Angular y WebSockets para asegurar que los datos fluyeran en tiempo real.</p>
+
+      <p>Técnicamente funcionaba muy bien. Al tener tanta información disponible, nuestro primer instinto fue poner
+        todos los detalles de los vuelos y pasajeros en la misma pantalla, pensando que dar acceso a todo en un solo
+        lugar sería lo más útil.</p>
+
+      <h2>El feedback de los usuarios</h2>
+      <p>El día que presentamos la herramienta a los operadores, la pantalla cargó toda la información rápidamente. Sin
+        embargo, una operadora senior nos hizo ver algo fundamental que habíamos pasado por alto:</p>
+
+      <blockquote>
+        "Hay demasiada información junta. En una incidencia yo no me detengo a leer cada detalle, necesito escanear
+        visualmente. Aquí me cuesta encontrar lo urgente."
+      </blockquote>
+
+      <h2>Leer frente a escanear</h2>
+      <p>Habíamos diseñado pensando en la cantidad de datos, no en cómo se consumen bajo presión. Cuando hay que
+        reubicar a cientos de pasajeros rápidamente, el operador busca patrones: un color que indica un estado crítico,
+        un número que resalta los asientos libres, o advertencias sobre necesidades especiales.</p>
+
+      <p>Lo que no habíamos medido en nuestras fases previas de desarrollo fue la <strong>carga cognitiva
+          visual</strong>. Una pantalla puede ser técnicamente perfecta, pero si resulta abrumadora visualmente, frena
+        el trabajo del usuario.</p>
+
+      <h2>Rediseñar para destacar lo importante</h2>
+      <p>Con este aprendizaje, dimos un paso atrás. Redujimos la densidad de la interfaz y aplicamos una jerarquía de
+        información mucho más estricta: ocultamos detalles secundarios detrás de paneles expandibles y convertimos los
+        datos más críticos en indicadores visuales simples y directos.</p>
+
+      <p>Este cambio fue el verdadero responsable de que lográramos reducir significativamente las interacciones y el
+        tiempo medio para completar las tareas. Nos demostró que, en entornos de alta presión, un buen diseño debe ser
+        lo suficientemente limpio como para permitir que la información importante destaque por sí sola.</p>
+
+    </article>
+
+    <a href="../index.html#writing" class="back-link">← Volver al inicio</a>
+  </main>
+
+  <script>
+    (function () {
+      const html = document.documentElement;
+      const btn = document.getElementById('btn-theme');
+      const lbl = document.getElementById('theme-lbl');
+      const mq = window.matchMedia('(prefers-color-scheme: dark)');
+
+      function applyTheme(dark) {
+        html.setAttribute('data-theme', dark ? 'dark' : 'light');
+        lbl.textContent = dark ? 'claro' : 'oscuro';
+        localStorage.setItem('ba-theme', dark ? 'dark' : 'light');
+      }
+
+      const saved = localStorage.getItem('ba-theme');
+      applyTheme(saved ? saved === 'dark' : mq.matches);
+
+      btn.addEventListener('click', () => {
+        applyTheme(html.getAttribute('data-theme') !== 'dark');
+      });
+
+      mq.addEventListener('change', e => {
+        if (!localStorage.getItem('ba-theme')) applyTheme(e.matches);
+      });
+    })();
+  </script>
+</body>
+
+</html>
